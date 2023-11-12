@@ -13,7 +13,7 @@ import { UserModule } from './user/user.module';
       username: 'seoin',
       password: 'password',
       database: 'seoin',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
