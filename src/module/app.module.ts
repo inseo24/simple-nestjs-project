@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UserController } from '../controller/user.controller';
-import { UserService } from '../service/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../entity/user.entity';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [
@@ -13,12 +13,14 @@ import { User } from '../entity/user.entity';
       username: 'seoin',
       password: 'password',
       database: 'seoin',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User]),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
+    UserModule,
   ],
-  controllers: [UserController],
-  providers: [UserService],
 })
 export class AppModule {}
